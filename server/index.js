@@ -1,11 +1,7 @@
-// index.js
+// server/index.js
 const express = require('express');
-const app = express();
-const corsOptions = {
-    origin: 'https://food-listing-app-eta.vercel.app/', // IMPORTANT: Use your actual Vercel URL here
-    optionsSuccessStatus: 200
-  };
-  app.use(cors(corsOptions));
+const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
@@ -14,11 +10,20 @@ const wishlistRoutes = require('./routes/wishlist');
 const subImageRoutes = require('./routes/subImages');
 const aiRoutes = require('./routes/ai');
 
+const app = express();
 
+// --- Middleware Configuration ---
+const corsOptions = {
+  // Remove the trailing slash for an exact match
+  origin: 'https://food-listing-app-eta.vercel.app', 
+  optionsSuccessStatus: 200
+};
 
-// Middleware
-app.use(cors()); // Allow requests from your frontend
-app.use(express.json()); // To parse JSON bodies
+// Use your specific CORS options here
+app.use(cors(corsOptions));
+
+// This is the only other middleware needed
+app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -28,5 +33,4 @@ app.use('/api/subimages', subImageRoutes);
 app.use('/api/ai', aiRoutes);
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
