@@ -6,7 +6,7 @@ const db = require('../db');
 const router = express.Router();
 require('dotenv').config();
 
-// Register a new user
+// Register a new user (This part was already correct)
 router.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
     try {
@@ -30,7 +30,9 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
-        const [rows] = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+        // --- THIS IS THE FIX ---
+        const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+
         if (rows.length === 0) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }

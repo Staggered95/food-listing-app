@@ -9,9 +9,11 @@ const router = express.Router();
 // @access  Private/Admin
 router.delete('/:id', protect, admin, async (req, res) => {
     try {
-        const [result] = await db.query('DELETE FROM subImages WHERE id = ?', [req.params.id]);
+        // --- THIS IS THE FIX ---
+        // Get the result object and check its 'rowCount' property
+        const result = await db.query('DELETE FROM subImages WHERE id = $1', [req.params.id]);
 
-        if (result.affectedRows === 0) {
+        if (result.rowCount === 0) {
             return res.status(404).json({ message: 'Sub-image not found' });
         }
 
