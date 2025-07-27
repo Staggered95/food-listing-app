@@ -56,6 +56,9 @@ const FoodDetailPage = ({ wishlist, toggleWishlist }) => {
           <div className="md:w-1/2">
             <img className="h-64 w-full object-cover md:h-full" src={item.imageUrl} alt={item.name} />
           </div>
+          <div className="flex items-center mt-6">
+              <span className="text-2xl font-bold text-green-600 dark:text-green-400">₹{parseFloat(item.price).toFixed(2)}</span>
+            </div>
           <div className="p-8 md:w-1/2">
             <div className="flex justify-between items-start">
               <span className={`px-3 py-1 text-sm font-semibold rounded-full ${item.type === 'veg' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -85,12 +88,7 @@ const FoodDetailPage = ({ wishlist, toggleWishlist }) => {
                 <ReactMarkdown>{item.description}</ReactMarkdown>
               )}
             </div>
-            <div className="flex items-center mt-6">
-              <span className="text-2xl font-bold text-green-600 dark:text-green-400">${parseFloat(item.price).toFixed(2)}</span>
-            </div>
-            <div className="mt-8">
-              <button className="w-full bg-green-600 text-white rounded-lg px-6 py-3 font-semibold hover:bg-green-700 transition-colors">Add to Cart</button>
-            </div>
+            
           </div>
         </div>
 
