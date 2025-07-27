@@ -1,7 +1,7 @@
 // index.js
 const express = require('express');
 const corsOptions = {
-    origin: 'https://your-frontend-url.vercel.app', // IMPORTANT: Use your actual Vercel URL here
+    origin: 'https://food-listing-app-eta.vercel.app/', // IMPORTANT: Use your actual Vercel URL here
     optionsSuccessStatus: 200
   };
   app.use(cors(corsOptions));
