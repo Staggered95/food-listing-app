@@ -1,15 +1,15 @@
-// db.js
-const mysql = require('mysql2');
+// server/db.js
+const { Pool } = require('pg');
 require('dotenv').config();
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  // If you're connecting to a Render Postgres DB, you might need this SSL config
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
-module.exports = pool.promise();
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+};
