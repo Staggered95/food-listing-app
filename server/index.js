@@ -1,5 +1,6 @@
 // index.js
 const express = require('express');
+const app = express();
 const corsOptions = {
     origin: 'https://food-listing-app-eta.vercel.app/', // IMPORTANT: Use your actual Vercel URL here
     optionsSuccessStatus: 200
@@ -13,7 +14,7 @@ const wishlistRoutes = require('./routes/wishlist');
 const subImageRoutes = require('./routes/subImages');
 const aiRoutes = require('./routes/ai');
 
-const app = express();
+
 
 // Middleware
 app.use(cors()); // Allow requests from your frontend
