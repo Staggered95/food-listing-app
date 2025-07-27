@@ -1,6 +1,10 @@
 // index.js
 const express = require('express');
-const cors = require('cors');
+const corsOptions = {
+    origin: 'https://your-frontend-url.vercel.app', // IMPORTANT: Use your actual Vercel URL here
+    optionsSuccessStatus: 200
+  };
+  app.use(cors(corsOptions));
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
