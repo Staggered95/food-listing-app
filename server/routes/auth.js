@@ -10,12 +10,19 @@ require('dotenv').config();
 router.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
     try {
+        const userExistsCheck = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+        if (userExistsCheck.rows.length > 0) {
+            return res.status(400).json({ message: 'A user with this email already exists.' });
+        }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const [result] = await db.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3)', [name, email, hashedPassword]);
-        res.status(201).json({ message: 'User registered successfully', userId: result.insertId });
+        const text = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id';
+        const values = [name, email, hashedPassword];
+        const { rows } = await db.query(text, values);
+        res.status(201).json({ message: 'User registered successfully', userId: rows[0].id });
     } catch (error) {
-        res.status(500).json({ message: 'Error registering user', error });
+        console.error('Error registering user:', error);
+        res.status(500).json({ message: 'Error registering user', error: error.message });
     }
 });
 
