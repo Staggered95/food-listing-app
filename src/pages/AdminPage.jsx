@@ -81,7 +81,7 @@ const AdminPage = () => {
         if (mainImageFile) {
             dataToSubmit.append('mainImage', mainImageFile);
         } else if (editingItem) {
-            dataToSubmit.append('imageurl', editingItem.imageurl);
+            dataToSubmit.append('imageUrl', editingItem.imageUrl);
         }
 
         if (subImageFiles.length > 0) {
@@ -151,10 +151,10 @@ const AdminPage = () => {
         if (window.confirm('Are you sure you want to delete the main image? This cannot be undone.')) {
             try {
                 const token = localStorage.getItem('token');
-                // We use the existing update route, but send the item's data with a null imageurl
+                // We use the existing update route, but send the item's data with a null imageUrl
                 const dataToSubmit = {
                     ...formData,
-                    imageurl: null, // Signal to the backend to remove the image URL
+                    imageUrl: null, // Signal to the backend to remove the image URL
                 };
 
                 await axios.put(`/api/foods/${editingItem.id}`, dataToSubmit, {
@@ -162,7 +162,7 @@ const AdminPage = () => {
                 });
 
                 // Update the state instantly to reflect the deletion
-                setEditingItem(prev => ({ ...prev, imageurl: null }));
+                setEditingItem(prev => ({ ...prev, imageUrl: null }));
                 fetchFoods(); // Refresh the main list
                 alert('Main image removed.');
             } catch (error) {
@@ -257,9 +257,9 @@ const AdminPage = () => {
                         <div className="md:col-span-2">
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Main Food Image</label>
                             {/* THIS IS THE FIX: Check if editingItem exists before accessing its properties */}
-                            {editingItem && editingItem.imageurl && (
+                            {editingItem && editingItem.imageUrl && (
                                 <div className='mb-2 relative w-24 h-24'>
-                                    <img src={editingItem.imageurl} alt="Current main" className="w-full h-full object-cover rounded-md" />
+                                    <img src={editingItem.imageUrl} alt="Current main" className="w-full h-full object-cover rounded-md" />
                                     <button 
                                         type="button"
                                         onClick={handleDeleteMainImage}
@@ -368,7 +368,7 @@ const AdminPage = () => {
                     {filteredFoods.map(food => (
                         <div key={food.id} className="flex justify-between items-center p-3 border-b dark:border-gray-700">
                              <div className="flex items-center gap-4">
-                                <img src={food.imageurl} alt={food.name} className="w-16 h-16 object-cover rounded-md" />
+                                <img src={food.imageUrl} alt={food.name} className="w-16 h-16 object-cover rounded-md" />
                                 <div className='dark:text-white'>
                                     <p className="font-bold">{food.name}</p>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">₹ {parseFloat(food.price).toFixed(2)}</p>

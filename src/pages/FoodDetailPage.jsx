@@ -54,7 +54,7 @@ const FoodDetailPage = ({ wishlist, toggleWishlist }) => {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
         <div className="md:flex">
           <div className="md:w-1/2">
-            <img className="h-64 w-full object-cover md:h-full" src={item.imageurl} alt={item.name} />
+            <img className="h-64 w-full object-cover md:h-full" src={item.imageUrl} alt={item.name} />
           </div>
           <div className="p-8 md:w-1/2">
             <div className="flex justify-between items-start">

@@ -24,7 +24,7 @@ const FoodCard = ({ item, wishlist, toggleWishlist }) => {
     <Link to={`/food/${item.id}`} className="block">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-green-200 dark:hover:shadow-green-300 overflow-hidden transform transition-transform duration-300 hover:scale-105 group">
         <div className="relative">
-          <img src={item.imageurl} alt={item.name} className="w-full h-52 object-cover" />
+          <img src={item.imageUrl} alt={item.name} className="w-full h-52 object-cover" />
           {user && ( // Only show the button if a user is logged in
             <button onClick={handleWishlistClick} className="absolute top-2 right-2 bg-white/70 dark:bg-gray-800/70 p-2 rounded-full text-gray-400 hover:text-red-500 transition-colors">
               <svg className={`w-6 h-6 ${isWishlisted ? 'text-red-500 fill-current' : 'group-hover:text-red-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
