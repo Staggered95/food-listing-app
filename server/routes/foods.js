@@ -35,7 +35,7 @@ const uploadToCloudinary = (fileBuffer) => {
 router.get('/', async (req, res) => {
     try {
         // CORRECTED: Use { rows }
-        const { rows } = await db.query('SELECT * FROM foods');
+        const { rows } = await db.query('SELECT id, name, category, type, price, description, description_hindi, imageurl AS "imageUrl" FROM foods');
         res.json(rows);
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
@@ -46,7 +46,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         // CORRECTED: Use result.rows for each promise
-        const foodPromise = db.query('SELECT * FROM foods WHERE id = $1', [req.params.id]);
+        const foodPromise = db.query('SELECT id, name, category, type, price, description, description_hindi, imageurl AS "imageUrl" FROM foods WHERE id = $1', [req.params.id]);
         const subImagesPromise = db.query('SELECT * FROM subImages WHERE food_id = $1', [req.params.id]);
 
         const [foodResult, subImagesResult] = await Promise.all([foodPromise, subImagesPromise]);
@@ -81,7 +81,7 @@ router.post('/', protect, admin, upload.fields([
 
         const { name, category, type, price, description, hindiDescription } = req.body;
         
-        const insertFoodQuery = 'INSERT INTO foods (name, category, type, price, description, description_hindi, imageUrl) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id';
+        const insertFoodQuery = 'INSERT INTO foods (name, category, type, price, description, description_hindi, imageurl) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id';
         const foodValues = [name, category, type, price, description, hindiDescription, mainImageUrl];
         const newFood = await db.query(insertFoodQuery, foodValues);
         const foodId = newFood.rows[0].id; // CORRECTED: Get new ID from result.rows[0].id
@@ -133,7 +133,7 @@ router.put('/:id', protect, admin, upload.fields([
 
         const { name, category, type, price, description, hindiDescription } = req.body;
         await db.query(
-            'UPDATE foods SET name = $1, category = $2, type = $3, price = $4, description = $5, description_hindi = $6, imageUrl = $7 WHERE id = $8',
+            'UPDATE foods SET name = $1, category = $2, type = $3, price = $4, description = $5, description_hindi = $6, imageurl = $7 WHERE id = $8',
             [name, category, type, price, description, hindiDescription, mainImageUrl, foodId]
         );
 
