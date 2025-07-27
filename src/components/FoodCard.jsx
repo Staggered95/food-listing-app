@@ -7,6 +7,7 @@ import { useContext } from 'react';
 const FoodCard = ({ item, wishlist, toggleWishlist }) => {
   const { user } = useContext(AuthContext);
   const isWishlisted = user && wishlist.includes(item.id);
+  console.log('Data received by FoodCard:', item);
 
   const handleWishlistClick = (e) => {
     e.stopPropagation();
