@@ -13,6 +13,7 @@ const SignupPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        console.log('Attempting to register at URL:', axios.defaults.baseURL + '/api/auth/register');
         try {
             await axios.post('/api/auth/register', { name, email, password });
             navigate('/login'); // Redirect to login page after successful registration
