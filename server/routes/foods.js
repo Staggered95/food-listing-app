@@ -35,7 +35,7 @@ const uploadToCloudinary = (fileBuffer) => {
 router.get('/', async (req, res) => {
     try {
         // CORRECTED: Use { rows }
-        const { rows } = await db.query('SELECT id, name, category, type, price, description, description_hindi, imageurl AS "imageUrl" FROM foods');
+        const { rows } = await db.query('SELECT * FROM foods');
         res.json(rows);
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
@@ -46,7 +46,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         // CORRECTED: Use result.rows for each promise
-        const foodPromise = db.query('SELECT id, name, category, type, price, description, description_hindi, imageurl AS "imageUrl" FROM foods WHERE id = $1', [req.params.id]);
+        const foodPromise = db.query('SELECT * FROM foods WHERE id = $1', [req.params.id]);
         const subImagesPromise = db.query('SELECT * FROM subImages WHERE food_id = $1', [req.params.id]);
 
         const [foodResult, subImagesResult] = await Promise.all([foodPromise, subImagesPromise]);
