@@ -1,0 +1,17 @@
+/* src/index.css */
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/Poppins-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Mukta';
+    src: url('../assets/fonts/Mukta-Regular.ttf') format('truetype');
+  }
+
+@import "tailwindcss";
+
+@theme {
+    --font-poppins: 'Poppins', sans-serif;
+    --font-mukta: 'Mukta', sans-serif;
+}
