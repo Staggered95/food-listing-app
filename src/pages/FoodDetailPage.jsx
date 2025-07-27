@@ -11,6 +11,7 @@ const FoodDetailPage = ({ wishlist, toggleWishlist }) => {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showHindi, setShowHindi] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchFoodItem = async () => {
@@ -48,6 +49,7 @@ const FoodDetailPage = ({ wishlist, toggleWishlist }) => {
   const isWishlisted = user && wishlist.includes(item.id);
 
   return (
+    <>
     <div className="container mx-auto px-6 py-8">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
         <div className="md:flex">
@@ -100,19 +102,47 @@ const FoodDetailPage = ({ wishlist, toggleWishlist }) => {
                             {item.subImages.map(subImg => (
                                 <div key={subImg.id}>
                                     <img 
-                                        src={subImg.image_url} 
-                                        alt={`${item.name} gallery image`} 
-                                        className="w-full h-32 object-cover rounded-lg shadow-md"
-                                    />
+                      src={subImg.image_url} 
+                      alt={`${item.name} gallery image`} 
+                      className="w-full h-32 object-cover rounded-lg shadow-md cursor-pointer transform transition-transform hover:scale-105"
+                      onClick={() => setSelectedImage(subImg.image_url)}
+                    />
                                 </div>
                             ))}
                         </div>
                     </div>
                 )}
-                {/* --- End Gallery --- */}
 
       </div>
     </div>
+
+{selectedImage && (
+  <div 
+    className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-75"
+    onClick={() => setSelectedImage(null)} // Click outside to close
+  >
+    <div 
+      className="relative p-4"
+      // Stop click from bubbling up and closing the modal when image is clicked
+      onClick={(e) => e.stopPropagation()} 
+    >
+      <img 
+        src={selectedImage} 
+        alt="Full screen view" 
+        className="max-w-3xl max-h-[70vh] object-contain"
+      />
+      {/* Optional: Add a close button */}
+      <button 
+        className="absolute top-0 right-0 mt-4 mr-4 text-white text-3xl"
+        onClick={() => setSelectedImage(null)}
+      >
+        &times;
+      </button>
+    </div>
+  </div>
+)}
+</>
+
   );
 };
 

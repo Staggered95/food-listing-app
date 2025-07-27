@@ -30,7 +30,7 @@ const LoginPage = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white">Login to YumYard</h1>
+                <h1 className="text-2xl font-bold text-center text-green-600 dark:text-white">Login to AFC</h1>
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>

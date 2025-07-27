@@ -7,7 +7,7 @@ const router = express.Router();
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
 router.post('/generate-description', protect, admin, async (req, res) => {
-    const { name, category, type } = req.body;
+    const { name, category, type, description } = req.body;
 
     if (!name || !category || !type) {
         return res.status(400).json({ message: 'Name, category, and type are required' });
@@ -15,14 +15,14 @@ router.post('/generate-description', protect, admin, async (req, res) => {
 
     try {
         // --- Step 1: Generate English Description ---
-        const generationPrompt = `Generate an appealing menu description for a food item. Be creative and appetizing.
+        const generationPrompt = `Generate an appealing menu description for a food item. Be creative and appetizing. Give only one result, no options. Mind the Notes if given
 
         Item Details:
         - Name: ${name}
         - Category: ${category}
         - Type: ${type}
         
-        Description:`;
+        Note: ${description || 'No note provided'}`;
         
         const genResponse = await axios.post(GEMINI_API_URL, {
             contents: [{ parts: [{ text: generationPrompt }] }],

@@ -206,7 +206,8 @@ const AdminPage = () => {
             const { data } = await axios.post('/api/ai/generate-description', {
                 name: formData.name,
                 category: formData.category,
-                type: formData.type
+                type: formData.type,
+                description: formData.description
             }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -302,25 +303,25 @@ const AdminPage = () => {
                             {/* --- UPDATED: English Description with Toggle --- */}
                         <div className="md:col-span-2">
                             <div className="flex justify-between items-center mb-1">
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">English Description</label>
                                 <div className='flex items-center gap-4'>
                                     {/* Tab-like buttons to toggle view */}
                                     <div className="text-sm border border-gray-300 dark:border-gray-600 rounded-lg p-0.5 flex">
                                         <button type="button" onClick={() => setEnglishPreview(false)} className={`px-2 py-0.5 rounded-md ${!englishPreview ? 'bg-green-600 text-white' : 'dark:text-gray-300'}`}>Write</button>
                                         <button type="button" onClick={() => setEnglishPreview(true)} className={`px-2 py-0.5 rounded-md ${englishPreview ? 'bg-green-600 text-white' : 'dark:text-gray-300'}`}>Preview</button>
                                     </div>
-                                    <button type="button" onClick={handleAiAutofill} disabled={isGenerating} className="text-xs bg-purple-600 text-white px-2 py-1 rounded-md hover:bg-purple-700 disabled:bg-gray-400">
+                                    <button type="button" onClick={handleAiAutofill} disabled={isGenerating} className="text-xs bg-purple-600 dark:bg-purple-400 text-white px-2 py-1 rounded-md hover:bg-purple-700 disabled:bg-gray-400">
                                         {isGenerating ? 'Generating...' : '✨ AI Autofill'}
                                     </button>
                                 </div>
                             </div>
                             {/* Conditionally render either textarea or preview */}
                             {englishPreview ? (
-                                <div className="p-2 border rounded h-32 overflow-y-auto prose prose-sm dark:prose-invert max-w-none">
+                                <div className="p-2 border rounded h-50 overflow-y-auto prose prose-sm dark:prose-invert max-w-none">
                                     <ReactMarkdown>{formData.description || "Nothing to preview..."}</ReactMarkdown>
                                 </div>
                             ) : (
-                                <textarea name="description" value={formData.description} onChange={handleInputChange} placeholder="English Description (Markdown supported)" className="p-2 border rounded w-full h-32 dark:bg-gray-700 dark:text-white" required />
+                                <textarea name="description" value={formData.description} onChange={handleInputChange} placeholder="English Description (Markdown supported)" className="p-2 border rounded w-full h-50 dark:bg-gray-700 dark:text-white" required />
                             )}
                         </div>
                         
@@ -334,11 +335,11 @@ const AdminPage = () => {
                                 </div>
                             </div>
                             {hindiPreview ? (
-                                <div className="p-2 border rounded h-32 overflow-y-auto prose prose-sm dark:prose-invert max-w-none">
+                                <div className="p-2 border rounded h-50 overflow-y-auto prose prose-sm dark:prose-invert max-w-none">
                                     <ReactMarkdown>{formData.hindiDescription || "Nothing to preview..."}</ReactMarkdown>
                                 </div>
                             ) : (
-                                <textarea name="hindiDescription" value={formData.hindiDescription} onChange={handleInputChange} placeholder="Hindi Description (Markdown supported)" className="p-2 border rounded w-full h-32 dark:bg-gray-700 dark:text-white" />
+                                <textarea name="hindiDescription" value={formData.hindiDescription} onChange={handleInputChange} placeholder="Hindi Description (Markdown supported)" className="p-2 border rounded w-full h-50 dark:bg-gray-700 dark:text-white" />
                             )}
                         </div>
                     
@@ -370,7 +371,7 @@ const AdminPage = () => {
                                 <img src={food.imageUrl} alt={food.name} className="w-16 h-16 object-cover rounded-md" />
                                 <div className='dark:text-white'>
                                     <p className="font-bold">{food.name}</p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">${parseFloat(food.price).toFixed(2)}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">₹ {parseFloat(food.price).toFixed(2)}</p>
                                 </div>
                             </div>
                             <div className="flex gap-2">

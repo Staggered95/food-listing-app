@@ -34,11 +34,10 @@ const FoodCard = ({ item, wishlist, toggleWishlist }) => {
         </div>
         <div className="p-4">
           <h3 className="text-xl font-semibold text-gray-800 dark:text-white">{item.name}</h3>
-          <p className="text-gray-600 dark:text-gray-300 mt-1 h-12 overflow-hidden">{item.description}</p>
           <div className="flex justify-between items-center mt-4">
             {/* THIS IS THE CORRECTED LINE */}
             <span className="text-lg font-bold text-green-600 dark:text-green-400">₹{parseFloat(item.price).toFixed(2)}</span>
-            <span className={`px-3 py-1 text-sm font-semibold rounded-full ${item.type === 'veg' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            <span className={`px-3 py-1 text-sm font-semibold rounded-full ${item.type === 'veg' ? 'bg-green-100 text-green-800 ring' : 'bg-red-100 text-red-800 ring'}`}>
               {item.type}
             </span>
           </div>
