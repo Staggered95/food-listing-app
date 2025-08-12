@@ -15,7 +15,7 @@ const app = express();
 
 // Use this simplified CORS block
 const corsOptions = {
-  origin: ['https://food-listing-app-eta.vercel.app', 'http://localhost:5173', 'http://10.18.79.226:5173', 'https://afcfood.in'],
+  origin: ['https://food-listing-app-eta.vercel.app', 'http://localhost:5173', 'https://www.afcfood.in',  'https://afcfood.in'],
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
