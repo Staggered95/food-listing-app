@@ -20,15 +20,23 @@ import SignupPage from './pages/SignupPage';
 import AdminPage from './pages/AdminPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import { useLoading } from './context/LoadingContext'; // 1. Import useLoading
+import { setupAxiosInterceptors } from './api/axiosConfig'; // 2. Import the interceptor setup
+import LoadingBar from './components/LoadingBar'; // 3. Import the LoadingBar
 
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 const App = () => {
   const { user } = useContext(AuthContext);
   const [wishlist, setWishlist] = useState([]);
+  const { showLoading, hideLoading } = useLoading();
 
-  // DEBUG LOG
-  console.log('App component is rendering. User is:', user);
+  useEffect(() => {
+    setupAxiosInterceptors(showLoading, hideLoading);
+  }, [showLoading, hideLoading]);
+
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -69,7 +77,8 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="bg-gray-50 dark:bg-gray-950 min-h-screen flex flex-col">
+    <LoadingBar />
+      <div className="bg-[#F4E1C1] dark:bg-black min-h-screen flex flex-col">
         <Navbar />
         <div className="flex-grow">
           <Routes>
@@ -95,6 +104,8 @@ const App = () => {
             />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
           </Routes>
         </div>
         <Footer />

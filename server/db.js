@@ -2,13 +2,16 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const pool = new Pool({
+// Check if the environment is production (Render sets NODE_ENV to 'production')
+const isProduction = process.env.NODE_ENV === 'production';
+
+const connectionConfig = {
   connectionString: process.env.DATABASE_URL,
-  // If you're connecting to a Render Postgres DB, you might need this SSL config
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+  // Add SSL configuration ONLY when in production
+  ssl: isProduction ? { rejectUnauthorized: false } : false
+};
+
+const pool = new Pool(connectionConfig);
 
 module.exports = {
   query: (text, params) => pool.query(text, params),

@@ -1,7 +1,8 @@
 // src/pages/SignupPage.jsx
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react'; 
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AuthContext from '../context/AuthContext'; 
 
 const SignupPage = () => {
     const [name, setName] = useState('');
@@ -10,66 +11,70 @@ const SignupPage = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const { login } = useContext(AuthContext);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        console.log('Attempting to register at URL:', axios.defaults.baseURL + '/api/auth/register');
         try {
-            await axios.post('/api/auth/register', { name, email, password });
-            navigate('/login'); // Redirect to login page after successful registration
+            const { data } = await axios.post('/api/auth/register', { name, email, password });
+            
+            login(data.token);
+            
+            navigate('/');
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to create account.');
         }
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                <h1 className="text-2xl font-bold text-center text-green-600 dark:text-white">Create an Account</h1>
-                <form className="space-y-6" onSubmit={handleSubmit}>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className="w-full px-3 py-2 mt-1 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-3 py-2 mt-1 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-3 py-2 mt-1 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            required
-                        />
-                    </div>
-                    {error && <p className="text-sm text-red-500">{error}</p>}
-                    <div>
-                        <button type="submit" className="w-full px-4 py-2 font-semibold text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
-                            Sign Up
-                        </button>
-                    </div>
-                </form>
-                <p className="text-sm text-center text-gray-600 dark:text-gray-400">
-                    Already have an account? <Link to="/login" className="font-medium text-green-600 hover:underline">Log in</Link>
-                </p>
-            </div>
+    <div className="flex items-center justify-center min-h-screen bg-[#F4E1C1] dark:bg-black">
+        <div className="w-full max-w-md p-8 space-y-6 bg-white/80 dark:bg-[#F4E1C1]/10 backdrop-blur-sm rounded-lg shadow-md">
+            <h1 className="text-2xl font-bold text-center text-[#6B3B1B] dark:text-white">Create an Account</h1>
+            <form className="space-y-6" onSubmit={handleSubmit}>
+                <div>
+                    <label className="block text-sm font-medium text-[#4A2A14] dark:text-gray-300">Name</label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full px-3 py-2 mt-1 border rounded-md border-[#E0A050]/50 dark:bg-[#F4E1C1]/20 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#C27B37]"
+                        required
+                    />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-[#4A2A14] dark:text-gray-300">Email</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full px-3 py-2 mt-1 border rounded-md border-[#E0A050]/50 dark:bg-[#F4E1C1]/20 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#C27B37]"
+                        required
+                    />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-[#4A2A14] dark:text-gray-300">Password</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full px-3 py-2 mt-1 border rounded-md border-[#E0A050]/50 dark:bg-[#F4E1C1]/20 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#C27B37]"
+                        required
+                    />
+                </div>
+                {error && <p className="text-sm text-red-500 text-center">{error}</p>}
+                <div>
+                    <button type="submit" className="w-full px-4 py-2 font-semibold text-white bg-[#6B3B1B] rounded-md hover:bg-[#4A2A14] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#6B3B1B]">
+                        Sign Up
+                    </button>
+                </div>
+            </form>
+            <p className="text-sm text-center text-[#8B6A50] dark:text-gray-400">
+                Already have an account? <Link to="/login" className="font-medium text-[#6B3B1B] hover:underline dark:text-[#E0A050]">Log in</Link>
+            </p>
         </div>
-    );
+    </div>
+);
 };
 
 export default SignupPage;

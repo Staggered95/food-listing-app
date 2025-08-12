@@ -15,3 +15,8 @@
     --font-poppins: 'Poppins', sans-serif;
     --font-mukta: 'Mukta', sans-serif;
 }
+
+@keyframes loading-bar-animation {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

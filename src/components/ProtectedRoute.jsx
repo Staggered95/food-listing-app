@@ -8,7 +8,6 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
     const location = useLocation();
 
     if (!user) {
-        // Change is on this line: pass location.pathname instead of location
         return <Navigate to="/login" state={{ from: location.pathname }} replace />;
     }
 

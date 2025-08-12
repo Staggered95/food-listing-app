@@ -12,9 +12,7 @@ const WishlistPage = ({ wishlist, toggleWishlist }) => {
     const fetchWishlistedItems = async () => {
       setLoading(true);
       try {
-        // 1. Fetch all food items from the API
         const { data: allFoods } = await axios.get('/api/foods');
-        // 2. Filter the results to find items whose IDs are in our wishlist
         const filteredItems = allFoods.filter(item => wishlist.includes(item.id));
         setWishlistedItems(filteredItems);
       } catch (error) {
@@ -27,11 +25,10 @@ const WishlistPage = ({ wishlist, toggleWishlist }) => {
     if (wishlist && wishlist.length > 0) {
       fetchWishlistedItems();
     } else {
-      // If the wishlist is empty, no need to fetch anything
       setWishlistedItems([]);
       setLoading(false);
     }
-  }, [wishlist]); // Re-run this effect whenever the main wishlist state changes
+  }, [wishlist]); 
 
   if (loading) {
     return <div className="text-center py-20">Loading Wishlist...</div>;
@@ -39,7 +36,7 @@ const WishlistPage = ({ wishlist, toggleWishlist }) => {
 
   return (
     <div className="container mx-auto px-6 py-8">
-      <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">My Wishlist ❤️</h1>
+      <h1 className="text-3xl font-bold text-[#4A2A14] dark:text-white mb-8">My Wishlist ❤️</h1>
       
       {wishlistedItems.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -49,9 +46,9 @@ const WishlistPage = ({ wishlist, toggleWishlist }) => {
         </div>
       ) : (
         <div className="text-center py-16">
-          <p className="text-xl text-gray-500 dark:text-gray-400">Your wishlist is empty.</p>
-          <p className="mt-2 text-gray-400">Click the heart icon on any food item to add it here.</p>
-          <Link to="/" className="mt-6 inline-block bg-green-600 text-white rounded-lg px-6 py-3 font-semibold hover:bg-green-700 transition-colors">
+          <p className="text-xl text-[#8B6A50] dark:text-gray-400">Your wishlist is empty.</p>
+          <p className="mt-2 text-[#8B6A50] dark:text-gray-400">Click the heart icon on any food item to add it here.</p>
+          <Link to="/" className="mt-6 inline-block bg-[#6B3B1B] text-white rounded-lg px-6 py-3 font-semibold hover:bg-[#4A2A14] transition-colors">
             Find Something Delicious
           </Link>
         </div>

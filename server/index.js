@@ -9,17 +9,15 @@ const foodRoutes = require('./routes/foods');
 const wishlistRoutes = require('./routes/wishlist');
 const subImageRoutes = require('./routes/subImages');
 const aiRoutes = require('./routes/ai');
+const contactRoutes = require('./routes/contact');
 
 const app = express();
 
-// --- Middleware Configuration ---
+// Use this simplified CORS block
 const corsOptions = {
-  // Remove the trailing slash for an exact match
-  origin: 'https://food-listing-app-eta.vercel.app', 
+  origin: ['https://food-listing-app-eta.vercel.app', 'http://localhost:5173', 'http://10.18.79.226:5173', 'https://afcfood.in'],
   optionsSuccessStatus: 200
 };
-
-// Use your specific CORS options here
 app.use(cors(corsOptions));
 
 // This is the only other middleware needed
@@ -31,6 +29,7 @@ app.use('/api/foods', foodRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/subimages', subImageRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/contact', contactRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
