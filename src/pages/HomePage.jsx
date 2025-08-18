@@ -113,56 +113,26 @@ const HomePage = ({ wishlist, toggleWishlist }) => {
 
         <div className="top-[70px] z-40 bg-[#F4E1C1]/0 dark:bg-[#2B1A10]/0 backdrop-blur-sm py-4 mb-8 rounded-lg">
             <div className="flex flex-col md:flex-row justify-between items-center">
-
-                <div className="flex items-center space-x-2 overflow-x-auto pb-2 mb-4 md:mb-0 w-full">
-                        {/* Always visible categories */}
-                        {visibleCategories.map(category => (
-                            groupedItems[category] && (
-                                <button
-                                    key={category}
-                                    onClick={() => handleCategoryClick(category)}
-                                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors whitespace-nowrap ${
-                                        activeCategory === category
-                                            ? 'bg-[#6B3B1B] text-white'
-                                            : 'bg-white/50 dark:bg-gray-800/50 text-[#4A2A14] dark:text-gray-300 hover:bg-[#E0A050] hover:text-white'
-                                    }`}
-                                >
-                                    {category}
-                                </button>
-                            )
-                        ))}
-                        
-                        {/* "More" button and dropdown */}
-                        {hiddenCategories.length > 0 && (
-                            <div className="relative" ref={dropdownRef}>
-                                <button
-                                    onClick={() => setIsMoreCategoriesOpen(!isMoreCategoriesOpen)}
-                                    className="px-4 py-2 rounded-full text-sm font-semibold bg-white/50 dark:bg-gray-800/50 text-[#4A2A14] dark:text-gray-300 hover:bg-[#E0A050] hover:text-white"
-                                >
-                                    More ▾
-                                </button>
-                                {isMoreCategoriesOpen && (
-                                    <div className="absolute top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl py-2">
-                                        {hiddenCategories.map(category => (
-                                            groupedItems[category] && (
-                                                <a
-                                                    key={category}
-                                                    href={`#${category}`}
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        handleCategoryClick(category);
-                                                    }}
-                                                    className={`block px-4 py-2 text-sm text-left ${activeCategory === category ? 'font-bold text-[#6B3B1B]' : 'text-[#4A2A14]'} dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700`}
-                                                >
-                                                    {category}
-                                                </a>
-                                            )
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </div>
+                
+                <div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-2 mb-4 w-full">
+    {displayCategories.map(category => (
+        groupedItems[category] && (
+            <button
+                key={category}
+                onClick={() => handleCategoryClick(category)}
+                className={`w-full justify-center px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
+                    activeCategory === category
+                        ? 'bg-[#6B3B1B] text-white' // Active: Primary background
+                        : 'bg-white/50 dark:bg-gray-800/50 text-[#4A2A14] dark:text-gray-300 hover:bg-[#E0A050] hover:text-white' // Inactive: Text color, Accent hover
+                }`}
+            >
+                {category}
+            </button>
+        )
+    ))}
+</div>
+</div>
 
                 <div className="flex space-x-4 flex-shrink-0">
                     <button onClick={() => setFoodType('all')} className={foodType === 'all' ? 'font-bold text-[#C27B37]' : 'text-[#8B6A50] hover:text-[#C27B37]'}>All</button>
