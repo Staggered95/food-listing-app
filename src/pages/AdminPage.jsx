@@ -10,7 +10,8 @@ const categories = [
     "Non-Vegetarian Mains",
     "Biryani & Rice",
     "Desserts",
-    "Beverages"
+    "Beverages",
+    "Nature's Basket"
 ];
 
 const AdminPage = () => {
