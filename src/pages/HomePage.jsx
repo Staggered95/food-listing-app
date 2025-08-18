@@ -115,24 +115,24 @@ const HomePage = ({ wishlist, toggleWishlist }) => {
             <div className="flex flex-col md:flex-row justify-between items-center">
                 
                 <div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-2 mb-4 w-full">
-    {displayCategories.map(category => (
-        groupedItems[category] && (
-            <button
-                key={category}
-                onClick={() => handleCategoryClick(category)}
-                className={`w-full justify-center px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
-                    activeCategory === category
-                        ? 'bg-[#6B3B1B] text-white' // Active: Primary background
-                        : 'bg-white/50 dark:bg-gray-800/50 text-[#4A2A14] dark:text-gray-300 hover:bg-[#E0A050] hover:text-white' // Inactive: Text color, Accent hover
-                }`}
-            >
-                {category}
-            </button>
-        )
-    ))}
-</div>
-</div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-2 mb-4 w-full">
+                        {displayCategories.map(category => (
+                            groupedItems[category] && (
+                                <button
+                                key={category}
+                                onClick={() => handleCategoryClick(category)}
+                                className={`w-full justify-center px-4 py-2 rounded-full text-sm font-semibold transition-colors md:w-auto ${
+                                activeCategory === category
+                                ? 'bg-[#6B3B1B] text-white' // Active: Primary background
+                                : 'bg-white/50 dark:bg-gray-800/50 text-[#4A2A14] dark:text-gray-300 hover:bg-[#E0A050] hover:text-white' // Inactive: Text color, Accent hover
+                                    }`}
+                                >
+                            {category}
+                            </button>
+                            )
+                        ))}
+                    </div>
+                </div>
 
                 <div className="flex space-x-4 flex-shrink-0">
                     <button onClick={() => setFoodType('all')} className={foodType === 'all' ? 'font-bold text-[#C27B37]' : 'text-[#8B6A50] hover:text-[#C27B37]'}>All</button>
